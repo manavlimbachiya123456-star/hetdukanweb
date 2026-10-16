@@ -1,3 +1,4 @@
+
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
@@ -13,19 +14,33 @@ import reviewRoutes from './routes/reviewRoutes.js'
 import couponRoutes from './routes/couponRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 
-connectDB()
-
 const app = express()
 
-app.use(
-  cors({
-    origin: [process.env.CLIENT_URL, process.env.ADMIN_URL].filter(Boolean),
-    credentials: true,
-  })
-)
+const allowedOrigins = [
+  'https://hetdukanweb-frontend.onrender.com',
+  'https://hetdukanweb-admin.onrender.com',
+]
+
+app.use(cors({
+  origin(origin, callback) {
+    // Allow requests without an Origin header, such as server-to-server requests.
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true)
+    }
+
+    console.warn('CORS blocked origin:', origin)
+    return callback(new Error('Origin not allowed by CORS'))
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
+
 app.use(express.json())
 
-app.get('/', (req, res) => res.send('Vaishali Saree API is running'))
+app.get('/', (req, res) => {
+  res.send('Vaishali Saree API is running')
+})
 
 app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
@@ -40,4 +55,9 @@ app.use(notFound)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
+connectDB()
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
