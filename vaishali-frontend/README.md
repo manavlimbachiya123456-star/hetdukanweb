@@ -26,20 +26,8 @@ them, only you do (I saw them in your VS Code file explorer earlier):
 
 These are used in the category band below the hero on the homepage.
 
-## Firebase phone OTP
-
-`src/services/firebase.js` still has placeholder values:
-```js
-apiKey: 'PASTE_YOUR_API_KEY',
-messagingSenderId: 'PASTE_YOUR_SENDER_ID',
-appId: 'PASTE_YOUR_APP_ID',
-```
-Get the real values from Firebase Console → Project Settings → scroll to
-"Your apps" → your Web app → paste them in. Until you do, OTP sending will
-fail (registration won't work, login still will for existing accounts).
-
 ## What's included
 Full MERN frontend: Home, Shop (filters/search/sort), Product Detail
 (gallery, wishlist, reviews), Cart, Checkout (saved addresses, coupon code,
 Razorpay/COD), Order Success, My Orders, Wishlist page, Account, Login,
-Register (Firebase phone OTP, two-step on one page).
+Register (name, email, optional phone, password).

@@ -43,15 +43,22 @@ function MyOrders() {
                 {order.orderStatus}
               </span>
             </div>
-            <div className="flex gap-2 overflow-x-auto pb-1">
+            <div className="space-y-3">
               {order.items.map((item, i) => (
-                <div key={i} className="w-14 h-16 flex-shrink-0 rounded-md overflow-hidden bg-stone">
-                  {item.image && <img src={item.image} alt={item.name} className="w-full h-full object-cover" />}
+                <div key={i} className="flex gap-3 items-center">
+                  <div className="w-14 h-16 flex-shrink-0 rounded-md overflow-hidden bg-stone">
+                    {item.image && <img src={item.image} alt={item.name} className="w-full h-full object-cover" />}
+                  </div>
+                  <div className="flex-1 min-w-0 text-sm">
+                    <p className="truncate">{item.name}</p>
+                    <p className="text-xs text-muted">₹{item.price.toLocaleString('en-IN')} × {item.quantity}</p>
+                  </div>
+                  <span className="text-sm text-sage-dark flex-shrink-0">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                 </div>
               ))}
             </div>
             <div className="flex items-center justify-between mt-3 text-sm">
-              <span className="text-muted">{order.items.length} item{order.items.length !== 1 ? 's' : ''}</span>
+              <span className="text-muted">{(() => { const n = order.items.reduce((t, i) => t + i.quantity, 0); return `${n} piece${n !== 1 ? 's' : ''}` })()}</span>
               <span className="font-medium text-sage-dark">₹{order.totalPrice.toLocaleString('en-IN')}</span>
             </div>
           </div>
