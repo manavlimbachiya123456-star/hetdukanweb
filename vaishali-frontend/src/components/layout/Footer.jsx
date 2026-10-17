@@ -27,7 +27,7 @@ function Footer() {
       </div>
       <div className="pt-5 flex flex-col sm:flex-row justify-between gap-2 text-xs">
         <span>© 2026 Vaishali Saree</span>
-        <span>Made with care in India</span>
+        <span>MADE BY MGL SOLUTIONS</span>
       </div>
     </footer>
   )
