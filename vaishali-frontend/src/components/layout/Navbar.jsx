@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { useCart } from '../../context/CartContext.jsx'
 
 const NAV_LINKS = [
@@ -13,23 +13,14 @@ const NAV_LINKS = [
 
 function Navbar() {
   const [open, setOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const navigate = useNavigate()
+ 
   const { totalItems } = useCart()
 
   const user = (() => {
     try { return JSON.parse(localStorage.getItem('user')) } catch { return null }
   })()
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (searchTerm.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchTerm.trim())}`)
-      setSearchOpen(false)
-      setSearchTerm('')
-    }
-  }
+
 
   return (
     <nav className="bg-ivory border-b border-black/5 relative z-40">
@@ -47,9 +38,7 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-4 md:gap-6 text-lg">
-          <button aria-label="Search" onClick={() => setSearchOpen(!searchOpen)} className="hover:text-plum">
-            🔍
-          </button>
+         
           <Link to={user ? '/account' : '/login'} aria-label="Account" className="hover:text-plum">
             👤
           </Link>
@@ -68,17 +57,7 @@ function Navbar() {
         </div>
       </div>
 
-      {searchOpen && (
-        <form onSubmit={handleSearch} className="border-t border-black/5 px-4 sm:px-6 md:px-10 py-3 bg-ivory">
-          <input
-            autoFocus
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search sarees..."
-            className="w-full max-w-md border border-black/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage"
-          />
-        </form>
-      )}
+     
 
       {open && (
         <div className="lg:hidden flex flex-col bg-ivory border-t border-black/5 px-6 py-4 gap-4">
